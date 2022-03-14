@@ -7,6 +7,7 @@ const bodyParse = require('body-parser');
 const cors = require('cors');
 
 // IMPORTS
+const usersRouter = require('./routes/users.js');
 
 // VARIABLES
 
@@ -31,7 +32,7 @@ app.use(cors());
 // STATIC FILES
 
 // ROUTES
-// app.use('/users', usersRouter);
+app.use('/users', usersRouter);
 
 /** ERROR HANDLING */
 app.use((req, res, next) => 
@@ -43,7 +44,7 @@ app.use((req, res, next) =>
 
 app.use((err, req, res, next) => 
 {
-    res.status(err.status || 500).send({ error:{ message: err.message } });
+    res.status(err.status || 500).send({ error:{ message: err.message, t: 'hamid' } });
 });
 //  LISTENER 
 app.listen(port, () =>
