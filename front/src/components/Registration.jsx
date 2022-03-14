@@ -9,11 +9,30 @@ function Registration() {
     const [email , setEmail] = useState();
     const [password , setPassword] = useState();
 
+useEffect(() => {
+        const axiosPost = async () =>
+    {
+        try
+            {
+                const res = await axios.post('http://localhost:4000/users/registration', user);
+                if(res.status === 201)
+                    {
+                        console.log("user", res.user);
+                    }
+            }
+        catch (err)
+        {
+            console.log(err.response.status);
+        }
+    }
+axiosPost()
+}, [user]);
+
   const handelSaveUser = () =>
   {
     setUser({firstName: firstName ,lastName : lastName , email: email, password: password });
-    
   }
+  
 //   console.log(user);
   return (
     <>
@@ -49,7 +68,6 @@ function Registration() {
   <Button 
   variant="primary"
   onClick={()=>handelSaveUser()}
-   
    >
     save
   </Button>
