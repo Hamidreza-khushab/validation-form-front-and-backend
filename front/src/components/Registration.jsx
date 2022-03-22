@@ -8,32 +8,34 @@ function Registration() {
     const [lastName , setLastName] = useState();
     const [email , setEmail] = useState();
     const [password , setPassword] = useState();
-
+    const [error  ,setError] = useState([]);
 useEffect(() => {
         const axiosPost = async () =>
     {
-        try
-            {
-                const res = await axios.post('http://localhost:4000/users/registration', user);
-                if(res.status === 201)
+            try
+                   {
+                const res = await axios.post('http://localhost:3001/users/registration', user);
+                if(res.status === 200)
                     {
                         console.log("user", res.user);
                     }
             }
         catch (err)
         {
-            console.log(err.response.status);
-        }
+            console.log('after res err',err.response.data.errors);
+            setError(err.response.data.errors);
+             console.log('befor useState',error)
+        } 
     }
-axiosPost()
+ axiosPost()
 }, [user]);
 
   const handelSaveUser = () =>
   {
-    setUser({firstName: firstName ,lastName : lastName , email: email, password: password });
+     setUser({firstName: firstName ,lastName : lastName , email: email, password: password }); 
   }
   
-//   console.log(user);
+   console.log('error length',error.length);
   return (
     <>
     <Form>
@@ -64,13 +66,19 @@ axiosPost()
             onChange={(e)=>setPassword(e.target.value)}
             />
         </Form.Group>
-
   <Button 
   variant="primary"
   onClick={()=>handelSaveUser()}
    >
     save
   </Button>
+  {/* {
+      (error.length>0)
+      ?
+      error.map(e => <p>{e.msg}</p>)
+      :
+        alert('ok')
+  } */}
 </Form>
     </>
   )

@@ -37,7 +37,7 @@ userSchema.methods.hashPassword = (password) =>
     const hash = crypto.createHmac('sha256', process.env.SECRET_TOKEN).update(password).digest('hex');
     return hash;
 };
-userSchema.method.comparePasseord = function (loginPassword)
+userSchema.methods.comparePassword = function (loginPassword)
 {
     if (this.password != this.hashPassword(loginPassword)) return false;
     return true;    
